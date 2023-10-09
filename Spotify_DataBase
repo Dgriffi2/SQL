@@ -1,0 +1,54 @@
+##Organizing code from Spotify's Database
+
+#Spotify Database
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL )
+
+#General selection to view the tables given.
+SELECT * FROM BIT_DB.Spotifydata
+
+#What is the overall average energy of this playlist?
+SELECT AVG(energy)
+FROM Spotifydata;
+
+#What are the most popular songs on the given list?
+SELECT popularity 
+FROM Spotifydata
+Order BY popularity asc;
+
+#Putting the artist's names in alphabetical order. 
+SELECT artist_name,popularity
+FROM Spotifydata
+Group BY popularity
+ORDER BY artist_name asc;
+
+#Only select the artists whose names start with 'L'
+SELECT distinct artist_name
+FROM Spotifydata
+WHERE artist_name like 'L%'
+
+#Oraganizing the 'Mode" column and adding text to identify the data better. 
+SELECT song_mode,
+    CASE
+     WHEN song_mode<1 THEN 'the mode is greater than 1'
+     WHEN song_mode=0 THEN 'the mode is equal to zero'
+     ELSE 'the mode is under 1'
+ END AS MODETEXT
+FROM Spotifydata;
